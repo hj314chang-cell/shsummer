@@ -1,3 +1,8 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>상하이 3박4일 · 8/6-8/9</title>
 <style>
   @font-face {
@@ -61,9 +66,10 @@
   body{
     background:var(--paper);
     color:var(--ink);
-    font-family:'Segoe UI','Noto Sans KR',system-ui,-apple-system,sans-serif;
+    font-family:'OngleipParkDahyeon','Noto Sans KR',system-ui,-apple-system,sans-serif;
     line-height:1.55;
     -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
   }
   h1,h2,h3,.display{
     font-family:'OngleipParkDahyeon','Noto Serif KR',Georgia,serif;
@@ -244,9 +250,6 @@
   .fork-card h4{margin:0 0 6px; font-size:16px; font-family:inherit;}
   .fork-card p{margin:0 0 8px; font-size:13.5px; color:var(--ink-soft);}
   .fork-card .links{margin-top:8px;}
-  @media (max-width:560px){
-    .fork-grid{grid-template-columns:1fr;}
-  }
 
   /* ---------- Weather panel ---------- */
   .weather{
@@ -416,19 +419,32 @@
     text-align:center;
   }
 
+  @media (max-width:560px){
+    .fork-grid{grid-template-columns:1fr;}
+    .fork-label, .fork-grid{margin-left:0;}
+  }
   @media (max-width:520px){
     .tab .day-date{display:none;}
+    .tab{padding:9px 4px 10px;}
+    .tab .day-num{font-size:17px;}
     .timeline{padding-left:44px;}
     .stop-time{left:-44px; width:34px; font-size:11px;}
     .stop-dot{left:-30px;}
     .timeline::before{left:14px;}
-    .fork-label, .fork-grid{margin-left:0;}
+    .card{padding:14px 14px;}
+    .weather{padding:12px 14px;}
+  }
+  @media (max-width:360px){
+    .tabs-row{gap:5px;}
+    .stay-legend{font-size:12px; gap:10px;}
   }
 </style>
+</head>
+<body>
 
 <header class="hero">
   <p class="eyebrow">2026.08.06 → 2026.08.09 · 3박4일</p>
-  <h1 class="title">상하이, <em>네 개의 밤</em></h1>
+  <h1 class="title">상하이, <em>나흘의 여름</em></h1>
   <p class="subtitle">와이탄의 야경부터 스틸먼 골목의 밤까지 — 친구들과 함께 걷는 상하이</p>
   <div class="stay-legend">
     <span><i class="stay-dot" style="background:var(--jade)"></i>하얏트 온더 번드(북외탄) 2박</span>
@@ -647,3 +663,6 @@ tabsRow.addEventListener('click', (e) => {
   window.scrollTo({top: document.querySelector('nav.tabs').offsetTop, behavior:'smooth'});
 });
 </script>
+
+</body>
+</html>

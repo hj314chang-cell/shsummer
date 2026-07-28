@@ -358,11 +358,30 @@
     margin:10px 0 0;
   }
   .card .name-cn{
+    display:inline-flex;
+    align-items:center;
+    gap:3px;
     font-size:13px;
     color:var(--ink-soft);
     font-family:'Segoe UI','Noto Sans KR',sans-serif;
     margin-left:6px;
   }
+  .copy-btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:22px;height:22px;
+    padding:0;
+    border:none;
+    background:transparent;
+    color:var(--ink-soft);
+    cursor:pointer;
+    border-radius:5px;
+    flex:none;
+  }
+  .copy-btn svg{width:14px;height:14px;}
+  .copy-btn:hover{color:var(--jade); background:var(--jade-soft);}
+  .copy-btn.copied{color:var(--jade);}
   .card p.desc{
     margin:8px 0 0;
     font-size:14.5px;
@@ -642,7 +661,7 @@
 <main class="wrap">
   <div id="panels"></div>
   <footer class="note">
-    지도·날씨·레퍼런스 링크는 모두 실시간 외부 사이트로 연결돼요 — 페이지에 날짜를 고정해두지 않고, 열 때마다 최신 정보를 그 자리에서 확인할 수 있게 했어요. 점선 테두리 카드는 아직 확정되지 않은 옵션이니 친구들과 골라보세요.
+    지도·날씨·레퍼런스 링크는 모두 실시간 외부 사이트로 연결돼요 — 페이지에 날짜를 고정해두지 않고, 열 때마다 최신 정보를 그 자리에서 확인할 수 있게 했어요. 중국어 이름 옆 복사 아이콘을 누르면 그 이름이 복사되니, 구글맵 대신 고덕지도(高德地图)에 붙여넣어 검색하세요. 점선 테두리 카드는 아직 확정되지 않은 옵션이니 친구들과 골라보세요.
   </footer>
 </main>
 
@@ -727,6 +746,8 @@ function refUrl(q){ return 'https://www.google.com/search?q=' + encodeURICompone
 const iconMap = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.1-7-11a7 7 0 0 1 14 0c0 4.9-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>';
 const iconRef = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>';
 const iconWarn = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 2 20h20L12 3z"/><path d="M12 10v4M12 17h.01"/></svg>';
+const iconCopy = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>';
+const iconCheck = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
 
 const iconTaxi = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 13l1.6-4.8A2 2 0 0 1 7 6.8h10a2 2 0 0 1 1.9 1.4L20.5 13"/><rect x="2.5" y="13" width="19" height="5" rx="1.5"/><circle cx="7" cy="18.7" r="1.4"/><circle cx="17" cy="18.7" r="1.4"/></svg>';
 const iconFood = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 11h18a9 9 0 0 1-18 0z"/><path d="M12 11V6"/><path d="M8.5 6c0-1 .5-1.6 1-2M15.5 6c0-1-.5-1.6-1-2"/></svg>';
@@ -754,7 +775,7 @@ function stopHtml(s){
           <span class="pill ${cat.pill}">${cat.label}</span>
           ${s.optional ? '<span class="pill option">옵션</span>' : ''}
         </div>
-        <h3>${s.ko}<span class="name-cn">${s.cn}</span></h3>
+        <h3>${s.ko}<span class="name-cn">${s.cn}<button type="button" class="copy-btn" data-copy="${escapeHtml(s.cn)}" aria-label="중국어 이름 복사 (고덕지도용)" title="중국어 복사">${iconCopy}</button></span></h3>
         <p class="desc">${s.desc}</p>
         <div class="tipbox ${tipClass}">
           <span class="tip-label">${tipLabel}</span>
@@ -855,6 +876,34 @@ tabsRow.addEventListener('click', (e) => {
     else { p.setAttribute('hidden',''); }
   });
   window.scrollTo({top: document.querySelector('nav.tabs').offsetTop, behavior:'smooth'});
+});
+
+/* ---------- Copy Chinese name (for Amap/고덕지도) ---------- */
+function copyText(text){
+  if(navigator.clipboard && window.isSecureContext){
+    return navigator.clipboard.writeText(text);
+  }
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.position = 'fixed';
+  ta.style.opacity = '0';
+  document.body.appendChild(ta);
+  ta.select();
+  try{ document.execCommand('copy'); }catch(e){}
+  document.body.removeChild(ta);
+  return Promise.resolve();
+}
+
+panels.addEventListener('click', (e) => {
+  const btn = e.target.closest('.copy-btn');
+  if(!btn) return;
+  const text = btn.dataset.copy;
+  copyText(text).then(() => {
+    const original = btn.innerHTML;
+    btn.innerHTML = iconCheck;
+    btn.classList.add('copied');
+    setTimeout(() => { btn.innerHTML = original; btn.classList.remove('copied'); }, 1200);
+  });
 });
 
 /* ---------- Expense settlement ---------- */

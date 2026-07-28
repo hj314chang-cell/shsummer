@@ -136,7 +136,7 @@
     max-width:760px;
     margin:0 auto;
     display:grid;
-    grid-template-columns:repeat(4,1fr);
+    grid-template-columns:repeat(5,1fr);
     gap:8px;
   }
   .tab{
@@ -163,6 +163,7 @@
     font-size:11px;
     letter-spacing:0.06em;
     margin-top:2px;
+    font-family:'Segoe UI','Noto Sans KR',system-ui,sans-serif;
     font-variant-numeric:tabular-nums;
   }
   .tab[aria-selected="true"]{
@@ -176,6 +177,11 @@
     background:var(--jade);
   }
   .tab:hover{color:var(--jade);}
+  .tab.tab-settle .day-num{color:var(--brass);}
+  .tab.tab-settle[aria-selected="true"]{color:var(--brass);}
+  .tab.tab-settle[aria-selected="true"] .day-num{color:var(--brass);}
+  .tab.tab-settle[aria-selected="true"]::after{background:var(--brass);}
+  .tab.tab-settle:hover{color:var(--brass);}
 
   /* ---------- Day panel ---------- */
   .day-panel{padding-top:26px;}
@@ -217,6 +223,40 @@
   }
   .day-note svg{width:15px;height:15px;flex:none;margin-top:2px;}
 
+  /* ---------- Prep card (packing / OOTD) ---------- */
+  .prep-card{
+    margin-top:14px;
+    padding:12px 14px;
+    border-radius:10px;
+    background:var(--brass-soft);
+    border:1px solid var(--line);
+  }
+  .prep-card h4{
+    margin:0 0 8px;
+    font-size:11px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--brass);
+    font-family:'Segoe UI','Noto Sans KR',system-ui,sans-serif;
+  }
+  .prep-row{
+    display:flex;
+    gap:10px;
+    font-size:13.5px;
+    color:var(--ink);
+    margin-top:7px;
+  }
+  .prep-row:first-of-type{margin-top:0;}
+  .prep-row .prep-label{
+    flex:none;
+    width:54px;
+    font-size:11px;
+    letter-spacing:0.03em;
+    color:var(--ink-soft);
+    padding-top:1px;
+    font-family:'Segoe UI','Noto Sans KR',system-ui,sans-serif;
+  }
+
   /* ---------- Weather panel ---------- */
   .weather{
     max-width:760px;
@@ -241,12 +281,12 @@
   /* ---------- Timeline ---------- */
   .timeline{
     position:relative;
-    padding-left:56px;
+    padding-left:68px;
   }
   .timeline::before{
     content:"";
     position:absolute;
-    left:20px;
+    left:54px;
     top:6px;
     bottom:6px;
     width:1px;
@@ -259,17 +299,19 @@
   .stop:last-child{padding-bottom:0;}
   .stop-time{
     position:absolute;
-    left:-56px;
-    top:2px;
-    width:44px;
+    left:-68px;
+    top:3px;
+    width:40px;
     text-align:right;
     font-size:12px;
+    font-family:'Segoe UI','Noto Sans KR',system-ui,sans-serif;
     font-variant-numeric:tabular-nums;
     color:var(--ink-soft);
+    white-space:nowrap;
   }
   .stop-dot{
     position:absolute;
-    left:-40px;
+    left:-19px;
     top:5px;
     width:9px;height:9px;
     border-radius:50%;
@@ -376,6 +418,95 @@
     font-size:14px;
   }
 
+  /* ---------- Settlement (expense tracker) ---------- */
+  .settle-form{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin:18px 0 4px;
+  }
+  .settle-form select, .settle-form input{
+    font-family:'Segoe UI','Noto Sans KR',system-ui,sans-serif;
+    font-size:14px;
+    padding:9px 10px;
+    border:1px solid var(--line);
+    border-radius:8px;
+    background:var(--card);
+    color:var(--ink);
+  }
+  .settle-form select{flex:1 1 108px;}
+  .settle-form input[name="place"]{flex:2 1 160px;}
+  .settle-form input[name="amount"]{flex:1 1 90px;}
+  .settle-form button{
+    flex:none;
+    font-family:'Segoe UI','Noto Sans KR',system-ui,sans-serif;
+    font-size:14px;
+    font-weight:600;
+    padding:9px 20px;
+    border:none;
+    border-radius:8px;
+    background:var(--jade);
+    color:var(--paper);
+    cursor:pointer;
+  }
+  .settle-form button:hover{opacity:.9;}
+  .settle-summary{
+    display:flex;
+    flex-wrap:wrap;
+    gap:16px;
+    align-items:center;
+    margin:18px 0;
+    padding:14px 16px;
+    border-radius:10px;
+    background:var(--jade-soft);
+  }
+  .settle-summary .total{
+    font-size:22px; font-weight:700; color:var(--jade);
+    font-family:'Segoe UI','Noto Sans KR',system-ui,sans-serif;
+    font-variant-numeric:tabular-nums;
+  }
+  .settle-summary .split{display:flex; align-items:center; gap:8px; font-size:13.5px; color:var(--ink-soft);}
+  .settle-summary .split input{
+    width:46px; text-align:center;
+    font-family:'Segoe UI','Noto Sans KR',system-ui,sans-serif;
+    border:1px solid var(--line); border-radius:6px; padding:5px; background:var(--card); color:var(--ink);
+  }
+  .settle-summary .split strong{
+    color:var(--ink); font-family:'Segoe UI','Noto Sans KR',system-ui,sans-serif; font-variant-numeric:tabular-nums;
+  }
+  .settle-day-group{margin-top:16px;}
+  .settle-day-group h5{
+    margin:0 0 6px;
+    font-size:12px;
+    letter-spacing:0.05em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    font-family:'Segoe UI','Noto Sans KR',system-ui,sans-serif;
+    display:flex; justify-content:space-between;
+    font-variant-numeric:tabular-nums;
+  }
+  .settle-row{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:9px 2px;
+    border-bottom:1px solid var(--line);
+    font-size:14px;
+  }
+  .settle-row .settle-place{flex:1;}
+  .settle-row .settle-amount{
+    font-variant-numeric:tabular-nums;
+    font-family:'Segoe UI','Noto Sans KR',system-ui,sans-serif;
+    color:var(--ink);
+  }
+  .settle-row .settle-del{
+    flex:none;
+    border:none; background:none; cursor:pointer;
+    color:var(--ink-soft); font-size:17px; line-height:1; padding:2px 5px;
+  }
+  .settle-row .settle-del:hover{color:var(--lacquer);}
+  .settle-empty{color:var(--ink-soft); font-size:13.5px; padding:16px 0; text-align:center;}
+
   footer.note{
     max-width:760px;
     margin:40px auto 0;
@@ -389,10 +520,10 @@
     .tab .day-date{display:none;}
     .tab{padding:9px 4px 10px;}
     .tab .day-num{font-size:17px;}
-    .timeline{padding-left:44px;}
-    .stop-time{left:-44px; width:34px; font-size:11px;}
-    .stop-dot{left:-30px;}
-    .timeline::before{left:14px;}
+    .timeline{padding-left:56px;}
+    .stop-time{left:-56px; width:28px; font-size:10.5px;}
+    .stop-dot{left:-18px;}
+    .timeline::before{left:42px;}
     .card{padding:14px 14px;}
     .weather{padding:12px 14px;}
   }
@@ -478,6 +609,7 @@ const days = [
   {
     num:1, date:'8.6 (목)', stay:'하얏트 온더 번드 1박', theme:'도착 & 우캉루의 첫 산책',
     desc:'북외탄 체크인 후 프렌치 콘세션의 우캉루까지 다녀오는 날 — 밤은 호텔 루프탑 VUE Bar에서 마무리해요.',
+    prep:{ootd:'이동은 편한 옷차림 → 오후 우캉루는 포토스팟이 많으니 사진 잘 나오는 여름옷으로 갈아입기 → 저녁 SOMETHING·VUE Bar는 살짝 힘준 스마트캐주얼', items:'보조배터리(공항→호텔 이동), 선크림, 걷기 편한 신발, 얇은 가디건(실내 에어컨·루프탑 바람 대비)'},
     note:'KE881은 인천 08:25 출발 · 비행 약 2시간15분 + 한중 시차 1시간을 감안하면 상하이(푸동) 현지시간 약 09:40 도착 예정이에요(항공사 최종 스케줄은 재확인 권장).',
     stops:[
       {time:'09:40', cat:'move', ko:'KE881 상하이 도착', cn:'上海浦东国际机场', desc:'인천 08:25 출발 KE881편으로 푸동공항 도착. 입국심사·수하물 수취까지 보통 40분~1시간 정도 걸려요.', tip:{type:'activity', text:'미리 중국 입국 관련 서류(건강신고 등)를 확인해두면 통과가 더 빨라요.'}, map:'上海浦东国际机场', ref:'푸동공항 입국 절차'},
@@ -492,6 +624,7 @@ const days = [
   {
     num:2, date:'8.7 (금)', stay:'하얏트 온더 번드 2박', theme:'새벽 산책 & 수향마을',
     desc:'새벽 강변 산책과 커피로 하루를 열고, 오전은 호텔에서 쉬었다가 오후엔 수향마을(주가각)을 다녀와요.',
+    prep:{ootd:'새벽 산책은 조깅복+운동화 → 낮엔 수영복(호텔 수영장) → 오후 수향마을은 활동성 좋고 시원한 여름옷 → 저녁 룽샤거리·VUE Bar는 편한 캐주얼', items:'보조배터리(수향마을 왕복 반나절 이동), 양산·모자(땡볕 대비), 선크림 필수, 물티슈(룽샤 먹을 때), 수영복·수건'},
     stops:[
       {time:'06:00', cat:'sight', ko:'새벽 북외탄 강변 산책', cn:'北外滩滨江', desc:'호텔 바로 앞 강변 산책로 — 인적 드문 이른 아침에 와이탄·푸동 스카이라인을 여유롭게 즐길 수 있어요.', tip:{type:'activity', text:'8월 상하이 해 뜨는 시간은 5시반~6시쯤이라, 살짝 일찍 나가면 일출과 함께 스카이라인을 볼 수 있어요. 산책 후 바로 커피로 이어가기 좋은 동선이에요.'}, map:'北外滩滨江 上海', ref:'북외탄 강변 산책로 후기'},
       {time:'07:00', cat:'cafe', ko:'매너커피', cn:'Manner Coffee', desc:'상하이에서 시작된 초저가 스페셜티 커피 체인 — 매장은 작아도 커피 맛과 가성비로 현지인들이 즐겨 찾아요.', tip:{type:'food', text:'아메리카노 기준 1만원이 채 안 돼요. 개인 텀블러를 가져가면 할인도 받을 수 있어요. 호텔에서 가장 가까운 지점을 지도에서 찾아보세요.'}, map:'Manner Coffee 北外滩', ref:'매너커피 상하이 후기'},
@@ -507,6 +640,7 @@ const days = [
   {
     num:3, date:'8.8 (토)', stay:'안다즈 신천지 체크인', theme:'새벽 산책 & 신천지 안다즈',
     desc:'북외탄의 마지막 아침을 산책으로 열고, 체크아웃 후엔 안다즈 신천지로 옮겨 주변을 즐기다 밤엔 마사지로 마무리해요.',
+    prep:{ootd:'새벽 산책은 조깅복 → 오전 예원·이동은 활동성 좋은 옷 → Photo With 촬영 전엔 사진 잘 나오는 여름옷으로 갈아입기 → 마사지 후엔 편한 옷', items:'보조배터리(하루 종일 이동 많은 날), 양산·모자, 캐리어는 미리 정리해서 이동, 마사지샵 냉방 대비 얇은 겉옷'},
     note:'16:45~17:45 옵션 세 곳(안푸루·중공1대회지·K11)은 시간대가 겹치니 취향껏 하나만 골라도 충분해요.',
     stops:[
       {time:'06:00', cat:'sight', ko:'새벽 북외탄 산책 (마지막 아침)', cn:'北外滩滨江', desc:'북외탄에서 보내는 마지막 아침, 다시 한 번 강변을 걸어요.', tip:{type:'activity', text:'어제와 다른 방향으로 걸어보거나, 오늘은 조금 더 여유 있게 사진을 남겨보세요.'}, map:'北外滩滨江 上海', ref:'북외탄 강변 산책로 후기'},
@@ -527,6 +661,7 @@ const days = [
   {
     num:4, date:'8.9 (일)', stay:'안다즈 신천지 → 출국', theme:'짧은 아침 & 출국',
     desc:'KE888이 13:40 상하이 출발이라 사실 여유가 많지 않아요 — 신천지 에그타르트 정도만 챙기고 바로 공항으로 향해요.',
+    prep:{ootd:'짧은 아침이라 비행기에서 그대로 입을 편한 이동복 하나면 충분해요', items:'여권·탑승권, 남은 위안화 정리, 보조배터리는 완충해서 기내 휴대(위탁 금지)'},
     note:'KE888 푸동 13:40 출발 · 인천 16:45 도착. 국제선 기준 최소 2.5~3시간 전 공항 도착이 필요해 늦어도 10:30~11:00엔 숙소에서 출발해야 해요.',
     stops:[
       {time:'08:00', cat:'move', ko:'체크아웃 & 짐 정리', cn:'安达仕酒店 · 新天地', desc:'짧은 마지막 날 — 체크아웃하고 짐을 맡긴 뒤 바로 마지막 일정을 시작해요.', tip:{type:'activity', text:'짐은 호텔 프론트나 근처 짐보관 서비스에 맡기면 이후 동선이 편해요.'}, map:'Andaz Xintiandi Shanghai', ref:'상하이 짐보관 서비스'},
@@ -571,8 +706,19 @@ function stopHtml(s){
     </div>`;
 }
 
+function prepHtml(prep){
+  if(!prep) return '';
+  return `
+    <div class="prep-card">
+      <h4>오늘의 준비물 &amp; OOTD</h4>
+      <div class="prep-row"><span class="prep-label">OOTD</span><span>${prep.ootd}</span></div>
+      <div class="prep-row"><span class="prep-label">준비물</span><span>${prep.items}</span></div>
+    </div>`;
+}
+
 function dayPanelHtml(d, active){
   const noteHtml = d.note ? `<div class="day-note">${iconWarn}<span>${d.note}</span></div>` : '';
+  const prepHtmlStr = prepHtml(d.prep);
   const stopsHtml = d.stops.map(stopHtml).join('');
   const closing = d.num === 4 ? `<div class="closing">3박4일 상하이 여행 마무리 — 즐거운 여행 되세요!</div>` : '';
   return `
@@ -582,9 +728,39 @@ function dayPanelHtml(d, active){
         <h2>Day ${d.num} · ${d.theme}</h2>
         <p>${d.date} — ${d.desc}</p>
         ${noteHtml}
+        ${prepHtmlStr}
       </div>
       <div class="timeline">${stopsHtml}</div>
       ${closing}
+    </section>`;
+}
+
+function settlePanelHtml(){
+  return `
+    <section class="day-panel" id="panel-settle" role="tabpanel" aria-labelledby="tab-settle" hidden>
+      <div class="day-head">
+        <span class="stay-tag" style="color:var(--brass); background:var(--brass-soft);">정산</span>
+        <h2>여행 지출 정산</h2>
+        <p>여행 중 쓴 돈을 그때그때 입력해두면 마지막 날 모아서 엔빵하기 편해요. 이 기록은 지금 보고 있는 브라우저(기기)에만 저장돼요 — 다른 사람 화면과 자동으로 합쳐지지 않으니, 한 명이 대표로 기록하는 걸 추천해요.</p>
+      </div>
+
+      <form id="settleForm" class="settle-form">
+        <select name="day" id="settleDay">${days.map(d => `<option value="${d.num}">Day ${d.num} · ${d.date}</option>`).join('')}</select>
+        <input type="text" name="place" id="settlePlace" placeholder="사용처 (예: 스먼이루 룽샤)" required>
+        <input type="number" name="amount" id="settleAmount" placeholder="금액(위안)" step="0.01" min="0" inputmode="decimal" required>
+        <button type="submit">추가</button>
+      </form>
+
+      <div class="settle-summary">
+        <div class="total" id="settleTotal">¥0.00</div>
+        <div class="split">
+          <span>인원수</span>
+          <input type="number" id="settlePeople" min="1" value="1">
+          <span>1인당 <strong id="settlePerPerson">¥0.00</strong></span>
+        </div>
+      </div>
+
+      <div id="settleList"></div>
     </section>`;
 }
 
@@ -592,24 +768,102 @@ const tabsRow = document.getElementById('tabsRow');
 const panels = document.getElementById('panels');
 
 tabsRow.innerHTML = days.map((d,i) => `
-  <button class="tab" id="tab-${d.num}" role="tab" aria-selected="${i===0}" aria-controls="panel-${d.num}" data-day="${d.num}">
+  <button class="tab" id="tab-${d.num}" role="tab" aria-selected="${i===0}" aria-controls="panel-${d.num}" data-target="panel-${d.num}">
     <span class="day-num">DAY ${d.num}</span>
     <span class="day-date">${d.date}</span>
-  </button>`).join('');
+  </button>`).join('') + `
+  <button class="tab tab-settle" id="tab-settle" role="tab" aria-selected="false" aria-controls="panel-settle" data-target="panel-settle">
+    <span class="day-num">정산</span>
+    <span class="day-date">지출 기록</span>
+  </button>`;
 
-panels.innerHTML = days.map((d,i) => dayPanelHtml(d, i===0)).join('');
+panels.innerHTML = days.map((d,i) => dayPanelHtml(d, i===0)).join('') + settlePanelHtml();
 
 tabsRow.addEventListener('click', (e) => {
   const btn = e.target.closest('.tab');
   if(!btn) return;
-  const day = btn.dataset.day;
-  tabsRow.querySelectorAll('.tab').forEach(t => t.setAttribute('aria-selected', String(t.dataset.day === day)));
+  const target = btn.dataset.target;
+  tabsRow.querySelectorAll('.tab').forEach(t => t.setAttribute('aria-selected', String(t.dataset.target === target)));
   panels.querySelectorAll('.day-panel').forEach(p => {
-    if(p.id === 'panel-' + day){ p.removeAttribute('hidden'); }
+    if(p.id === target){ p.removeAttribute('hidden'); }
     else { p.setAttribute('hidden',''); }
   });
   window.scrollTo({top: document.querySelector('nav.tabs').offsetTop, behavior:'smooth'});
 });
+
+/* ---------- Expense settlement ---------- */
+const SETTLE_KEY = 'sh-trip-0806-expenses';
+const PEOPLE_KEY = 'sh-trip-0806-people';
+
+function loadExpenses(){
+  try{ return JSON.parse(localStorage.getItem(SETTLE_KEY)) || []; }catch(e){ return []; }
+}
+function saveExpenses(list){ localStorage.setItem(SETTLE_KEY, JSON.stringify(list)); }
+function loadPeople(){ return Math.max(1, parseInt(localStorage.getItem(PEOPLE_KEY), 10) || 1); }
+function savePeople(n){ localStorage.setItem(PEOPLE_KEY, String(n)); }
+function yuan(n){ return '¥' + n.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2}); }
+function escapeHtml(s){ return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+function renderSettle(){
+  const list = loadExpenses();
+  const total = list.reduce((sum, e) => sum + e.amount, 0);
+  const people = loadPeople();
+  document.getElementById('settleTotal').textContent = yuan(total);
+  document.getElementById('settlePerPerson').textContent = yuan(total / people);
+  document.getElementById('settlePeople').value = people;
+
+  const listEl = document.getElementById('settleList');
+  if(list.length === 0){
+    listEl.innerHTML = `<p class="settle-empty">아직 기록된 지출이 없어요. 위 입력창으로 첫 지출을 추가해보세요.</p>`;
+    return;
+  }
+  listEl.innerHTML = days.map(d => {
+    const rows = list.filter(e => e.day === d.num);
+    if(rows.length === 0) return '';
+    const subtotal = rows.reduce((sum, e) => sum + e.amount, 0);
+    const rowsHtml = rows.map(e => `
+      <div class="settle-row">
+        <span class="settle-place">${escapeHtml(e.place)}</span>
+        <span class="settle-amount">${yuan(e.amount)}</span>
+        <button type="button" class="settle-del" data-id="${e.id}" aria-label="삭제">×</button>
+      </div>`).join('');
+    return `
+      <div class="settle-day-group">
+        <h5><span>Day ${d.num} · ${d.date}</span><span>${yuan(subtotal)}</span></h5>
+        ${rowsHtml}
+      </div>`;
+  }).join('');
+}
+
+document.getElementById('settleForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const day = parseInt(document.getElementById('settleDay').value, 10);
+  const place = document.getElementById('settlePlace').value.trim();
+  const amount = parseFloat(document.getElementById('settleAmount').value);
+  if(!place || !(amount >= 0)) return;
+  const list = loadExpenses();
+  list.push({id: Date.now() + '-' + Math.random().toString(36).slice(2,7), day, place, amount});
+  saveExpenses(list);
+  e.target.reset();
+  document.getElementById('settleDay').value = String(day);
+  document.getElementById('settlePlace').focus();
+  renderSettle();
+});
+
+document.getElementById('settlePeople').addEventListener('input', (e) => {
+  savePeople(Math.max(1, parseInt(e.target.value, 10) || 1));
+  renderSettle();
+});
+
+document.getElementById('settleList').addEventListener('click', (e) => {
+  const btn = e.target.closest('.settle-del');
+  if(!btn) return;
+  const list = loadExpenses().filter(x => x.id !== btn.dataset.id);
+  saveExpenses(list);
+  renderSettle();
+});
+
+renderSettle();
 </script>
 
 </body>

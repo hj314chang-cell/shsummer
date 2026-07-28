@@ -419,6 +419,55 @@
   }
 
   /* ---------- Settlement (expense tracker) ---------- */
+  .cat-picker{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    margin:16px 0 10px;
+  }
+  .cat-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    padding:8px 13px;
+    border:1px solid var(--line);
+    border-radius:20px;
+    background:var(--card);
+    color:var(--ink-soft);
+    font-family:'Segoe UI','Noto Sans KR',system-ui,sans-serif;
+    font-size:13px;
+    cursor:pointer;
+    transition:border-color .15s ease, color .15s ease, background .15s ease;
+  }
+  .cat-btn svg{width:16px;height:16px;flex:none;}
+  .cat-btn[aria-pressed="true"]{
+    border-color:var(--jade);
+    background:var(--jade-soft);
+    color:var(--jade);
+  }
+  .cat-btn:hover{border-color:var(--jade); color:var(--jade);}
+  .cat-summary{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    width:100%;
+    margin-top:4px;
+  }
+  .cat-chip{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    padding:5px 11px;
+    border-radius:20px;
+    background:var(--card);
+    border:1px solid var(--line);
+    font-size:12.5px;
+    font-family:'Segoe UI','Noto Sans KR',system-ui,sans-serif;
+    color:var(--ink-soft);
+  }
+  .cat-chip svg{width:14px;height:14px;flex:none;}
+  .cat-chip .cat-amt{font-variant-numeric:tabular-nums; font-weight:600; color:var(--ink);}
+  .settle-row .cat-icon{flex:none; width:16px; height:16px; color:var(--ink-soft);}
   .settle-form{
     display:flex;
     flex-wrap:wrap;
@@ -679,6 +728,19 @@ const iconMap = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stro
 const iconRef = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>';
 const iconWarn = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 2 20h20L12 3z"/><path d="M12 10v4M12 17h.01"/></svg>';
 
+const iconTaxi = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 13l1.6-4.8A2 2 0 0 1 7 6.8h10a2 2 0 0 1 1.9 1.4L20.5 13"/><rect x="2.5" y="13" width="19" height="5" rx="1.5"/><circle cx="7" cy="18.7" r="1.4"/><circle cx="17" cy="18.7" r="1.4"/></svg>';
+const iconFood = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 11h18a9 9 0 0 1-18 0z"/><path d="M12 11V6"/><path d="M8.5 6c0-1 .5-1.6 1-2M15.5 6c0-1-.5-1.6-1-2"/></svg>';
+const iconShopping = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8h12l-1 12.5a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1L6 8z"/><path d="M9 8a3 3 0 0 1 6 0"/></svg>';
+const iconEtc = '<svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="6" cy="12" r="1.7"/><circle cx="12" cy="12" r="1.7"/><circle cx="18" cy="12" r="1.7"/></svg>';
+
+const CATS = [
+  {key:'taxi', label:'택시', icon:iconTaxi},
+  {key:'food', label:'식비', icon:iconFood},
+  {key:'shopping', label:'쇼핑', icon:iconShopping},
+  {key:'etc', label:'기타', icon:iconEtc},
+];
+const CAT_MAP = Object.fromEntries(CATS.map(c => [c.key, c]));
+
 function stopHtml(s){
   const cat = CAT[s.cat];
   const tipClass = s.tip.type === 'food' ? 'food' : 'activity';
@@ -744,6 +806,9 @@ function settlePanelHtml(){
         <p>여행 중 쓴 돈을 그때그때 입력해두면 마지막 날 모아서 엔빵하기 편해요. 이 기록은 지금 보고 있는 브라우저(기기)에만 저장돼요 — 다른 사람 화면과 자동으로 합쳐지지 않으니, 한 명이 대표로 기록하는 걸 추천해요.</p>
       </div>
 
+      <div class="cat-picker" id="catPicker" role="radiogroup" aria-label="카테고리 선택">
+        ${CATS.map((c,i) => `<button type="button" class="cat-btn" data-cat="${c.key}" aria-pressed="${i===0}">${c.icon}${c.label}</button>`).join('')}
+      </div>
       <form id="settleForm" class="settle-form">
         <select name="day" id="settleDay">${days.map(d => `<option value="${d.num}">Day ${d.num} · ${d.date}</option>`).join('')}</select>
         <input type="text" name="place" id="settlePlace" placeholder="사용처 (예: 스먼이루 룽샤)" required>
@@ -758,6 +823,7 @@ function settlePanelHtml(){
           <input type="number" id="settlePeople" min="1" value="1">
           <span>1인당 <strong id="settlePerPerson">¥0.00</strong></span>
         </div>
+        <div class="cat-summary" id="catSummary"></div>
       </div>
 
       <div id="settleList"></div>
@@ -804,6 +870,8 @@ function savePeople(n){ localStorage.setItem(PEOPLE_KEY, String(n)); }
 function yuan(n){ return '¥' + n.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2}); }
 function escapeHtml(s){ return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 
+let selectedCat = CATS[0].key;
+
 function renderSettle(){
   const list = loadExpenses();
   const total = list.reduce((sum, e) => sum + e.amount, 0);
@@ -811,6 +879,12 @@ function renderSettle(){
   document.getElementById('settleTotal').textContent = yuan(total);
   document.getElementById('settlePerPerson').textContent = yuan(total / people);
   document.getElementById('settlePeople').value = people;
+
+  const catSummaryEl = document.getElementById('catSummary');
+  catSummaryEl.innerHTML = CATS.map(c => {
+    const sum = list.filter(e => (e.category || 'etc') === c.key).reduce((s,e) => s + e.amount, 0);
+    return `<span class="cat-chip">${c.icon}${c.label} <span class="cat-amt">${yuan(sum)}</span></span>`;
+  }).join('');
 
   const listEl = document.getElementById('settleList');
   if(list.length === 0){
@@ -821,12 +895,16 @@ function renderSettle(){
     const rows = list.filter(e => e.day === d.num);
     if(rows.length === 0) return '';
     const subtotal = rows.reduce((sum, e) => sum + e.amount, 0);
-    const rowsHtml = rows.map(e => `
+    const rowsHtml = rows.map(e => {
+      const cat = CAT_MAP[e.category] || CAT_MAP.etc;
+      return `
       <div class="settle-row">
+        <span class="cat-icon" title="${cat.label}">${cat.icon}</span>
         <span class="settle-place">${escapeHtml(e.place)}</span>
         <span class="settle-amount">${yuan(e.amount)}</span>
         <button type="button" class="settle-del" data-id="${e.id}" aria-label="삭제">×</button>
-      </div>`).join('');
+      </div>`;
+    }).join('');
     return `
       <div class="settle-day-group">
         <h5><span>Day ${d.num} · ${d.date}</span><span>${yuan(subtotal)}</span></h5>
@@ -835,6 +913,13 @@ function renderSettle(){
   }).join('');
 }
 
+document.getElementById('catPicker').addEventListener('click', (e) => {
+  const btn = e.target.closest('.cat-btn');
+  if(!btn) return;
+  selectedCat = btn.dataset.cat;
+  document.querySelectorAll('#catPicker .cat-btn').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.cat === selectedCat)));
+});
+
 document.getElementById('settleForm').addEventListener('submit', (e) => {
   e.preventDefault();
   const day = parseInt(document.getElementById('settleDay').value, 10);
@@ -842,7 +927,7 @@ document.getElementById('settleForm').addEventListener('submit', (e) => {
   const amount = parseFloat(document.getElementById('settleAmount').value);
   if(!place || !(amount >= 0)) return;
   const list = loadExpenses();
-  list.push({id: Date.now() + '-' + Math.random().toString(36).slice(2,7), day, place, amount});
+  list.push({id: Date.now() + '-' + Math.random().toString(36).slice(2,7), day, category: selectedCat, place, amount});
   saveExpenses(list);
   e.target.reset();
   document.getElementById('settleDay').value = String(day);

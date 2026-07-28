@@ -217,40 +217,6 @@
   }
   .day-note svg{width:15px;height:15px;flex:none;margin-top:2px;}
 
-  /* ---------- Morning fork (Day 3) ---------- */
-  .fork-label{
-    font-size:12px;
-    letter-spacing:0.06em;
-    text-transform:uppercase;
-    color:var(--ink-soft);
-    margin:0 0 10px 56px;
-  }
-  .fork-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:12px;
-    margin:0 0 28px 56px;
-  }
-  .fork-card{
-    border:1px dashed var(--line);
-    border-radius:10px;
-    padding:14px 16px;
-    background:var(--card);
-  }
-  .fork-card .fork-tag{
-    display:inline-block;
-    font-size:11px;
-    letter-spacing:0.04em;
-    color:var(--brass);
-    background:var(--brass-soft);
-    border-radius:20px;
-    padding:2px 9px;
-    margin-bottom:8px;
-  }
-  .fork-card h4{margin:0 0 6px; font-size:16px; font-family:inherit;}
-  .fork-card p{margin:0 0 8px; font-size:13.5px; color:var(--ink-soft);}
-  .fork-card .links{margin-top:8px;}
-
   /* ---------- Weather panel ---------- */
   .weather{
     max-width:760px;
@@ -419,10 +385,6 @@
     text-align:center;
   }
 
-  @media (max-width:560px){
-    .fork-grid{grid-template-columns:1fr;}
-    .fork-label, .fork-grid{margin-left:0;}
-  }
   @media (max-width:520px){
     .tab .day-date{display:none;}
     .tab{padding:9px 4px 10px;}
@@ -448,7 +410,7 @@
   <p class="subtitle">와이탄의 야경부터 스틸먼 골목의 밤까지 — 친구들과 함께 걷는 상하이</p>
   <div class="stay-legend">
     <span><i class="stay-dot" style="background:var(--jade)"></i>하얏트 온더 번드(북외탄) 2박</span>
-    <span><i class="stay-dot" style="background:var(--brass)"></i>신천지 1박</span>
+    <span><i class="stay-dot" style="background:var(--brass)"></i>안다즈 신천지 1박</span>
     <span>· KE881 08:25 인천발 / KE888 13:40 상하이발</span>
   </div>
 
@@ -528,45 +490,48 @@ const days = [
     ]
   },
   {
-    num:2, date:'8.7 (금)', stay:'하얏트 온더 번드 2박', theme:'예원 옛거리 & 톈즈팡 골목',
-    desc:'고전 정원과 만두로 오전을 채우고, 한낮 더위는 호텔에서 피한 뒤 저녁 마라룽샤와 VUE Bar 2일차로 마무리해요.',
+    num:2, date:'8.7 (금)', stay:'하얏트 온더 번드 2박', theme:'새벽 산책 & 수향마을',
+    desc:'새벽 강변 산책과 커피로 하루를 열고, 오전은 호텔에서 쉬었다가 오후엔 수향마을(주가각)을 다녀와요.',
     stops:[
-      {time:'09:30', cat:'sight', ko:'예원', cn:'豫园', desc:'명·청 시대 정원 양식을 그대로 간직한 상하이 대표 고전 정원.', tip:{type:'activity', text:'구불구불한 회랑과 연못, 가산(假山)을 따라 천천히 한 바퀴 — 30~40분이면 충분해요.'}, map:'豫园 上海', ref:'예원 관람 후기'},
-      {time:'11:30', cat:'food', ko:'난샹만두점', cn:'南翔馒头店 · 豫园店', desc:'1900년 개업, 게살 샤오롱바오의 원조 격인 상하이 최고 만두집.', tip:{type:'food', text:'게살 샤오롱바오(蟹粉小笼包)와 새우 샤오롱바오를 함께 시켜보세요. 1층은 포장, 2층은 홀이라 줄 서는 곳을 잘 확인하세요.'}, map:'南翔馒头店 豫园', ref:'南翔馒头店 상하이 후기'},
-      {time:'13:30', cat:'cafe', ko:'[옵션] 호텔 복귀 · 수영장 휴식', cn:'Hyatt on the Bund', desc:'8월 상하이 한낮은 매우 덥고 습해요 — 가장 더운 시간대는 호텔 수영장에서 쉬었다 나가는 것도 좋은 선택.', optional:true, tip:{type:'activity', text:'수영 + 낮잠으로 체력 충전. 대신 청황먀오·톈즈팡 일정은 오후 늦게(선선해질 때)로 미뤄져요.'}, map:'Hyatt on the Bund 上海外滩茂悦大酒店', ref:'하얏트 온더 번드 수영장'},
-      {time:'16:00', cat:'cafe', ko:'청황먀오 옛거리', cn:'城隍庙老街', desc:'명청 스타일 건물이 늘어선 상하이 대표 관광 상점가.', tip:{type:'activity', text:'매작과(梅花糕), 탕후루 같은 길거리 간식을 하나씩 사먹으며 구경하듯 걸어보세요.'}, map:'城隍庙老街', ref:'청황먀오 야시장 먹거리'},
-      {time:'17:30', cat:'cafe', ko:'톈즈팡', cn:'田子坊', desc:'옛 스틸먼 골목을 개조한 갤러리·공방·카페 밀집 지역.', tip:{type:'activity', text:'미로 같은 골목 속 수공예 공방에서 손도장 파기, 가죽공예 같은 체험도 해볼 수 있어요.'}, map:'田子坊 上海', ref:'톈즈팡 여행 후기'},
+      {time:'06:00', cat:'sight', ko:'새벽 북외탄 강변 산책', cn:'北外滩滨江', desc:'호텔 바로 앞 강변 산책로 — 인적 드문 이른 아침에 와이탄·푸동 스카이라인을 여유롭게 즐길 수 있어요.', tip:{type:'activity', text:'8월 상하이 해 뜨는 시간은 5시반~6시쯤이라, 살짝 일찍 나가면 일출과 함께 스카이라인을 볼 수 있어요. 산책 후 바로 커피로 이어가기 좋은 동선이에요.'}, map:'北外滩滨江 上海', ref:'북외탄 강변 산책로 후기'},
+      {time:'07:00', cat:'cafe', ko:'매너커피', cn:'Manner Coffee', desc:'상하이에서 시작된 초저가 스페셜티 커피 체인 — 매장은 작아도 커피 맛과 가성비로 현지인들이 즐겨 찾아요.', tip:{type:'food', text:'아메리카노 기준 1만원이 채 안 돼요. 개인 텀블러를 가져가면 할인도 받을 수 있어요. 호텔에서 가장 가까운 지점을 지도에서 찾아보세요.'}, map:'Manner Coffee 北外滩', ref:'매너커피 상하이 후기'},
+      {time:'09:00', cat:'cafe', ko:'호텔 복귀 · 수영장 휴식', cn:'Hyatt on the Bund', desc:'이른 새벽부터 움직였으니 오전은 호텔에서 느긋하게 — 수영도 하고 조식도 챙기며 체력을 채워요.', tip:{type:'activity', text:'오후엔 수향마을 왕복 이동에만 2~3시간이 드니, 여기서 충분히 쉬어두는 게 중요해요.'}, map:'Hyatt on the Bund 上海外滩茂悦大酒店', ref:'하얏트 온더 번드 수영장'},
+      {time:'12:00', cat:'move', ko:'수향마을로 이동', cn:'朱家角古镇', desc:'택시/디디로 약 1시간~1시간 반. 상하이 서쪽 근교의 강남 수향마을로 이동해요.', tip:{type:'activity', text:'디디(滴滴) 편도 예약이 편해요. 돌아올 때 탈 기사님을 미리 구해두거나 현지에서 잡을 계획을 세워두세요.'}, map:'朱家角古镇', ref:'수향마을 주가각 가는 법'},
+      {time:'13:30', cat:'sight', ko:'수향마을 (주가각)', cn:'朱家角古镇', desc:'옛 돌다리와 수로를 따라 이어지는 강남 수향마을 — 뱃놀이와 옛거리 산책을 함께 즐길 수 있어요.', tip:{type:'activity', text:'수로 뱃놀이(뱃삯 별도)는 꼭 한 번 타보세요. 방생교(放生桥) 위에서 보는 수로 풍경이 대표 포토스팟이에요.'}, map:'朱家角古镇', ref:'수향마을 주가각 여행 후기'},
+      {time:'17:00', cat:'move', ko:'시내로 복귀', cn:'北外滩', desc:'저녁 일정에 맞춰 다시 북외탄 방향으로 돌아와요.', tip:{type:'activity', text:'돌아오는 길 정체가 있을 수 있으니 여유 있게 출발하세요.'}, map:'北外滩 上海', ref:'주가각 상하이 시내 복귀'},
       {time:'19:00', cat:'food', ko:'스먼이루 대배당 (여름 룽샤 거리)', cn:'石门一路大排档', desc:'여름 상하이의 밤을 책임지는 마라룽샤(小龙虾) 노점 거리.', tip:{type:'food', text:'마라 맛(麻辣) 룽샤 1근 + 시원한 맥주 조합이 정석. 비닐장갑을 주니 편하게 손으로 까먹으면 돼요.'}, map:'石门一路 上海', ref:'石门一路 小龙虾 후기'},
-      {time:'21:00', cat:'sight', ko:'[옵션] 1933 라오창팡', cn:'1933老场坊', desc:'1933년 지어진 도축장을 개조한 독특한 아르데코 건축물 — VUE Bar 대신 다른 야경을 원하면.', optional:true, tip:{type:'activity', text:'나선형 통로와 콘크리트 소뿔 기둥이 SF 세트장 같은 사진 명소. 야간 조명이 켜진 후가 특히 몽환적이에요.'}, map:'1933老场坊', ref:'1933老场坊 사진 명소'},
-      {time:'21:30', cat:'sight', ko:'VUE Bar (2일차 밤)', cn:'VUE Bar · 茂悦大酒店 32楼', desc:'북외탄 마지막 밤, 다시 한 번 32층에서 즐기는 와이탄·푸동 야경.', tip:{type:'activity', text:'첫날과 다른 시그니처 칵테일에 도전해보세요. 내일은 신천지로 숙소를 옮기니 이 뷰는 오늘 밤이 마지막이에요.'}, map:'VUE Bar Hyatt on the Bund', ref:'VUE Bar 상하이 야경'},
+      {time:'21:00', cat:'sight', ko:'[옵션] 1933 라오창팡', cn:'1933老场坊', desc:'1933년 지어진 도축장을 개조한 독특한 아르데코 건축물 — 하루가 이미 꽉 찼다면 과감히 패스해도 좋아요.', optional:true, tip:{type:'activity', text:'나선형 통로와 콘크리트 소뿔 기둥이 SF 세트장 같은 사진 명소. 야간 조명이 켜진 후가 특히 몽환적이에요.'}, map:'1933老场坊', ref:'1933老场坊 사진 명소'},
+      {time:'21:30', cat:'sight', ko:'VUE Bar (2일차 밤)', cn:'VUE Bar · 茂悦大酒店 32楼', desc:'북외탄 마지막 밤, 다시 한 번 32층에서 즐기는 와이탄·푸동 야경.', tip:{type:'activity', text:'수향마을 다녀오느라 피곤하면 짧게 한 잔만! 내일은 신천지로 숙소를 옮기니 이 뷰는 오늘 밤이 마지막이에요.'}, map:'VUE Bar Hyatt on the Bund', ref:'VUE Bar 상하이 야경'},
     ]
   },
   {
-    num:3, date:'8.8 (토)', stay:'신천지 체크인', theme:'물의 도시 or 프렌치 콘세션 — 오전 갈림길',
-    desc:'오전은 두 갈래 옵션 중 골라보세요. 오후엔 신천지로 숙소를 옮기고 스틸먼 골목과 바 거리를 즐겨요.',
-    fork:{
-      label:'오전 옵션 (택1)',
-      options:[
-        {tag:'옵션 A · 하루 종일', ko:'수향마을 당일치기', cn:'朱家角古镇', desc:'상하이 서쪽 약 1시간~1시간 반 거리의 강남 수향마을. 뱃놀이와 옛 돌다리, 수로변 옛거리를 즐길 수 있어요.', tip:'08:00 체크아웃(짐은 프론트 보관) → 이동 1~1.5h → 10:30~14:00 관람(뱃놀이 유람 포함) → 시내 복귀 후 신천지 체크인. 이동시간이 길어 하루를 온전히 씁니다.', map:'朱家角古镇', ref:'수향마을 주가각 여행 후기'},
-        {tag:'옵션 B · 반나절', ko:'안푸루 브런치 & 프렌치 콘세션', cn:'安福路', desc:'가로수 그늘 아래 감도 높은 카페 거리에서 여유롭게 브런치를 즐기고 오전 중 신천지로 넘어가요.', tip:'09:00 체크아웃 → 09:30 안푸루 브런치 → 12:00 신천지 체크인. 이동이 짧아 오후 일정이 여유로워요.', map:'安福路 上海', ref:'안푸루 카페 추천'},
-      ]
-    },
+    num:3, date:'8.8 (토)', stay:'안다즈 신천지 체크인', theme:'새벽 산책 & 신천지 안다즈',
+    desc:'북외탄의 마지막 아침을 산책으로 열고, 체크아웃 후엔 안다즈 신천지로 옮겨 주변을 즐기다 밤엔 마사지로 마무리해요.',
+    note:'16:45~17:45 옵션 세 곳(안푸루·중공1대회지·K11)은 시간대가 겹치니 취향껏 하나만 골라도 충분해요.',
     stops:[
-      {time:'13:30', cat:'cafe', ko:'신천지 체크인 & 스틸먼 골목', cn:'新天地', desc:'숙소를 신천지로 옮겨 체크인한 뒤, 붉은 벽돌 스틸먼(石库门) 건축을 개조한 거리를 산책.', tip:{type:'activity', text:'짐을 풀고 나서 골목 구석구석 숨은 편집숍과 갤러리를 여유롭게 구경하세요.'}, map:'新天地 上海', ref:'신천지 여행 후기'},
-      {time:'15:00', cat:'sight', ko:'[옵션] Photo With 포토스튜디오', cn:'襄阳南路255号 부근', desc:'15분간 무제한 촬영 후 마음에 드는 컷을 인화 + 전체 원본 디지털 파일로 받는 셀프 사진관.', optional:true, tip:{type:'activity', text:'⚠ 지점이 최근 이전·휴업 이력이 있어요 — 방문 전 영업 여부와 정확한 지점을 꼭 확인하세요. 신천지에서 도보/택시로 짧게 이동 가능한 거리예요.'}, map:'Photo With 上海 襄阳南路', ref:'PHOTO WITH 상하이 사진관 후기'},
-      {time:'16:00', cat:'sight', ko:'중공1대회지 기념관', cn:'中共一大会址', desc:'신천지 한복판, 중국공산당 제1차 전국대표대회가 열린 역사적 장소.', tip:{type:'activity', text:'무료 관람이지만 여권 지참 필수. 역사에 관심 있다면 30분 정도 둘러보기 좋아요.'}, map:'中共一大会址纪念馆', ref:'중공1대회지 기념관 관람'},
+      {time:'06:00', cat:'sight', ko:'새벽 북외탄 산책 (마지막 아침)', cn:'北外滩滨江', desc:'북외탄에서 보내는 마지막 아침, 다시 한 번 강변을 걸어요.', tip:{type:'activity', text:'어제와 다른 방향으로 걸어보거나, 오늘은 조금 더 여유 있게 사진을 남겨보세요.'}, map:'北外滩滨江 上海', ref:'북외탄 강변 산책로 후기'},
+      {time:'08:00', cat:'move', ko:'하얏트 온더 번드 체크아웃', cn:'上海外滩茂悦大酒店', desc:'짐을 챙겨 체크아웃 — 짐은 택시 트렁크에 실은 채로 오전 일정을 먼저 즐겨요.', tip:{type:'activity', text:'짐 없이 가볍게 움직이고 싶다면 벨데스크에 짐 보관을 요청할 수도 있어요.'}, map:'Hyatt on the Bund 上海外滩茂悦大酒店', ref:'하얏트 온더 번드 체크아웃'},
+      {time:'09:00', cat:'sight', ko:'예원 & 청황먀오 옛거리', cn:'豫园 / 城隍庙老街', desc:'신천지로 넘어가는 길에 들르는 상하이 고전 정원과 옛 상점가 — 매작과, 탕후루 같은 간식도 맛보기 좋아요.', tip:{type:'activity', text:'짐이 있으니 가볍게 한 바퀴만 — 회랑과 가산 위주로 30분, 옛거리 간식은 걸으며 즐기세요.'}, map:'豫园 上海', ref:'예원 청황먀오 여행 후기'},
+      {time:'11:00', cat:'food', ko:'난샹만두점 (점심)', cn:'南翔馒头店 · 豫园店', desc:'게살 샤오롱바오의 원조 격인 상하이 최고 만두집에서 점심.', tip:{type:'food', text:'게살 샤오롱바오와 새우 샤오롱바오를 함께 시켜보세요. 1층 포장/2층 홀, 줄 서는 곳을 잘 확인하세요.'}, map:'南翔馒头店 豫园', ref:'南翔馒头店 상하이 후기'},
+      {time:'12:30', cat:'move', ko:'안다즈 상하이 신천지 체크인', cn:'上海新天地安达仕酒店 · Andaz Xintiandi', desc:'신천지 한복판의 안다즈 호텔로 이동해 체크인 — 남은 여행의 마지막 숙소예요.', tip:{type:'activity', text:'체크인 후 짐만 풀고 바로 신천지 주변 나들이를 시작하기 좋은 위치예요.'}, map:'Andaz Xintiandi Shanghai 上海新天地安达仕酒店', ref:'안다즈 신천지 후기'},
+      {time:'14:00', cat:'sight', ko:'Photo With 포토스튜디오', cn:'襄阳南路255号 부근', desc:'15분간 무제한 촬영 후 마음에 드는 컷을 인화 + 전체 원본 디지털 파일로 받는 셀프 사진관.', tip:{type:'activity', text:'⚠ 지점이 최근 이전·휴업 이력이 있어요 — 방문 전 영업 여부와 정확한 지점을 꼭 확인하세요. 신천지에서 도보/택시로 짧게 이동 가능해요.'}, map:'Photo With 上海 襄阳南路', ref:'PHOTO WITH 상하이 사진관 후기'},
+      {time:'15:30', cat:'cafe', ko:'톈즈팡 골목', cn:'田子坊', desc:'신천지에서 가까운, 옛 스틸먼 골목을 개조한 갤러리·공방·카페 거리.', tip:{type:'activity', text:'미로 같은 골목 속 수공예 공방에서 손도장 파기, 가죽공예 같은 체험도 해볼 수 있어요.'}, map:'田子坊 上海', ref:'톈즈팡 여행 후기'},
+      {time:'16:45', cat:'cafe', ko:'[옵션] 안푸루 브런치 & 프렌치 콘세션', cn:'安福路', desc:'가로수 그늘 아래 감도 높은 카페 거리 — 커피 한 잔 하며 여유를 즐기고 싶다면.', optional:true, tip:{type:'activity', text:'크루아상과 플랫화이트로 가볍게. 톈즈팡에서 도보/택시로 이동 가능해요.'}, map:'安福路 上海', ref:'안푸루 카페 추천'},
+      {time:'17:15', cat:'sight', ko:'[옵션] 중공1대회지 기념관', cn:'中共一大会址', desc:'신천지 한복판, 중국공산당 제1차 전국대표대회가 열린 역사적 장소 — 역사에 관심 있다면.', optional:true, tip:{type:'activity', text:'무료 관람이지만 여권 지참 필수. 30분 정도면 둘러볼 수 있어요.'}, map:'中共一大会址纪念馆', ref:'중공1대회지 기념관 관람'},
+      {time:'17:45', cat:'cafe', ko:'[옵션] K11 아트몰', cn:'K11购物艺术中心', desc:'미술관처럼 꾸며진 백화점 — 쇼핑이 더 당긴다면 이쪽으로.', optional:true, tip:{type:'activity', text:'지하 식품관에서 중국차, 딤섬소스 같은 기념품을 쇼핑하기 좋아요.'}, map:'K11 上海 淮海中路', ref:'上海K11 후기'},
       {time:'19:00', cat:'food', ko:'이꾸이허', cn:'逸桂禾 · 新天地', desc:'신천지 안에서 본방차이(本帮菜)를 코스로 즐길 수 있는 세련된 레스토랑.', tip:{type:'food', text:'홍샤오러우, 칭탕게살두부, 새우완자탕 코스를 추천해요. 저녁 시간엔 예약을 권장합니다.'}, map:'逸桂禾 新天地', ref:'逸桂禾 상하이 맛집'},
-      {time:'21:00', cat:'sight', ko:'신천지 바 골목', cn:'新天地 太平桥', desc:'옛 스틸먼 건물 안에 자리한 감성 바들이 모인 야간 명소.', tip:{type:'activity', text:'칵테일 한 잔과 함께 여행 마지막 밤을 여유롭게 마무리하세요.'}, map:'新天地 太平桥', ref:'신천지 바 추천'},
+      {time:'21:00', cat:'sight', ko:'마사지', cn:'足浴 按摩 · 新天地 부근', desc:'여행의 마지막 밤, 신천지 근처에서 마사지로 하루를 마무리해요.', tip:{type:'activity', text:'발마사지든 전신마사지든 취향껏. 인기 있는 곳은 저녁 시간대 예약이 안전해요.'}, map:'足浴 按摩 新天地', ref:'신천지 마사지 스파 추천'},
+      {time:'22:30', cat:'sight', ko:'[옵션] 신천지 바 골목', cn:'新天地 太平桥', desc:'마사지 후에도 기운이 남았다면, 옛 스틸먼 건물 속 감성 바에서 나이트캡 한 잔.', optional:true, tip:{type:'activity', text:'칵테일 한 잔과 함께 여행의 밤을 조금 더 즐겨보세요.'}, map:'新天地 太平桥', ref:'신천지 바 추천'},
     ]
   },
   {
-    num:4, date:'8.9 (일)', stay:'신천지 → 출국', theme:'짧은 아침 & 출국',
-    desc:'KE888이 13:40 상하이 출발이라 사실 여유가 많지 않아요 — 오전에만 마지막 일정을 짧게 넣었어요.',
+    num:4, date:'8.9 (일)', stay:'안다즈 신천지 → 출국', theme:'짧은 아침 & 출국',
+    desc:'KE888이 13:40 상하이 출발이라 사실 여유가 많지 않아요 — 신천지 에그타르트 정도만 챙기고 바로 공항으로 향해요.',
     note:'KE888 푸동 13:40 출발 · 인천 16:45 도착. 국제선 기준 최소 2.5~3시간 전 공항 도착이 필요해 늦어도 10:30~11:00엔 숙소에서 출발해야 해요.',
     stops:[
-      {time:'08:00', cat:'move', ko:'체크아웃 & 짐 정리', cn:'新天地', desc:'짧은 마지막 날 — 체크아웃하고 짐을 맡긴 뒤 바로 마지막 일정을 시작해요.', tip:{type:'activity', text:'짐은 숙소 프론트나 근처 짐보관 서비스에 맡기면 이후 동선이 편해요.'}, map:'新天地 上海', ref:'상하이 짐보관 서비스'},
-      {time:'08:30', cat:'food', ko:'지아지아탕바오', cn:'佳家汤包', desc:'현지인들이 즐겨 찾는 로컬 노포에서 먹는 마지막 샤오롱바오.', tip:{type:'food', text:'게살 샤오롱바오와 지단면(蛋饺面) 조합 추천. 시간이 빠듯하니 포장도 고려해보세요.'}, map:'佳家汤包 上海', ref:'佳家汤包 후기'},
-      {time:'09:30', cat:'cafe', ko:'[옵션] 마지막 쇼핑 (30분 내외)', cn:'淮海中路', desc:'시간이 정말 촉박하니 숙소 근처에서 짧게만 — 찻잎·딤섬소스·기념품 정도.', optional:true, tip:{type:'activity', text:'욕심내지 말고 동선상 공항 가는 길에 있는 곳 위주로 짧게 들르세요.'}, map:'淮海中路 上海', ref:'화이하이루 쇼핑 후기'},
+      {time:'08:00', cat:'move', ko:'체크아웃 & 짐 정리', cn:'安达仕酒店 · 新天地', desc:'짧은 마지막 날 — 체크아웃하고 짐을 맡긴 뒤 바로 마지막 일정을 시작해요.', tip:{type:'activity', text:'짐은 호텔 프론트나 근처 짐보관 서비스에 맡기면 이후 동선이 편해요.'}, map:'Andaz Xintiandi Shanghai', ref:'상하이 짐보관 서비스'},
+      {time:'08:30', cat:'food', ko:'신천지 에그타르트', cn:'蛋挞 · 新天地', desc:'마지막 아침은 가볍게 에그타르트 하나로 — 신천지 주변 베이커리에서 즐기기 좋아요.', tip:{type:'food', text:'따뜻할 때 바로 먹는 게 제일 맛있어요. 포장해서 공항 가는 길에 먹어도 좋아요.'}, map:'蛋挞 新天地', ref:'신천지 에그타르트 맛집'},
+      {time:'09:00', cat:'food', ko:'[옵션] 지아지아탕바오 (대안)', cn:'佳家汤包', desc:'에그타르트로는 아쉽다면, 로컬 노포에서 마지막 샤오롱바오도 대안이에요.', optional:true, tip:{type:'food', text:'게살 샤오롱바오와 지단면(蛋饺面) 조합 추천. 시간이 빠듯하니 포장도 고려해보세요.'}, map:'佳家汤包 上海', ref:'佳家汤包 후기'},
       {time:'10:30', cat:'move', ko:'공항 이동', cn:'上海浦东国际机场', desc:'짐을 찾고 푸동공항으로 출발. 시내에서 약 45분~1시간 소요.', tip:{type:'activity', text:'KE888 13:40 출발 기준 늦어도 10:30엔 출발해야 안전해요. 토요일 낮 시간대 정체 가능성도 감안하세요.'}, map:'上海浦东国际机场', ref:'상하이 공항 리무진 시간표'},
     ]
   },
@@ -606,24 +571,8 @@ function stopHtml(s){
     </div>`;
 }
 
-function forkHtml(fork){
-  const cards = fork.options.map(o => `
-    <div class="fork-card">
-      <span class="fork-tag">${o.tag}</span>
-      <h4>${o.ko}<span class="name-cn">${o.cn}</span></h4>
-      <p>${o.desc}</p>
-      <div class="tipbox activity"><span class="tip-label">이렇게 진행돼요</span>${o.tip}</div>
-      <div class="links">
-        <a href="${mapUrl(o.map)}" target="_blank" rel="noopener">${iconMap}구글맵</a>
-        <a href="${refUrl(o.ko + ' ' + o.cn + ' 후기')}" target="_blank" rel="noopener">${iconRef}레퍼런스 찾아보기</a>
-      </div>
-    </div>`).join('');
-  return `<p class="fork-label">${fork.label}</p><div class="fork-grid">${cards}</div>`;
-}
-
 function dayPanelHtml(d, active){
   const noteHtml = d.note ? `<div class="day-note">${iconWarn}<span>${d.note}</span></div>` : '';
-  const forkHtmlStr = d.fork ? forkHtml(d.fork) : '';
   const stopsHtml = d.stops.map(stopHtml).join('');
   const closing = d.num === 4 ? `<div class="closing">3박4일 상하이 여행 마무리 — 즐거운 여행 되세요!</div>` : '';
   return `
@@ -634,7 +583,6 @@ function dayPanelHtml(d, active){
         <p>${d.date} — ${d.desc}</p>
         ${noteHtml}
       </div>
-      ${forkHtmlStr}
       <div class="timeline">${stopsHtml}</div>
       ${closing}
     </section>`;

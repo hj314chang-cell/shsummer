@@ -136,7 +136,7 @@
     max-width:760px;
     margin:0 auto;
     display:grid;
-    grid-template-columns:repeat(5,1fr);
+    grid-template-columns:repeat(6,1fr);
     gap:8px;
   }
   .tab{
@@ -182,6 +182,11 @@
   .tab.tab-settle[aria-selected="true"] .day-num{color:var(--brass);}
   .tab.tab-settle[aria-selected="true"]::after{background:var(--brass);}
   .tab.tab-settle:hover{color:var(--brass);}
+  .tab.tab-tea .day-num{color:var(--lacquer);}
+  .tab.tab-tea[aria-selected="true"]{color:var(--lacquer);}
+  .tab.tab-tea[aria-selected="true"] .day-num{color:var(--lacquer);}
+  .tab.tab-tea[aria-selected="true"]::after{background:var(--lacquer);}
+  .tab.tab-tea:hover{color:var(--lacquer);}
 
   /* ---------- Day panel ---------- */
   .day-panel{padding-top:26px;}
@@ -575,6 +580,90 @@
   .settle-row .settle-del:hover{color:var(--lacquer);}
   .settle-empty{color:var(--ink-soft); font-size:13.5px; padding:16px 0; text-align:center;}
 
+  /* ---------- Milk tea order cheat sheet ---------- */
+  .tea-shop{margin-top:22px;}
+  .tea-shop:first-child{margin-top:0;}
+  .tea-shop h4{
+    font-size:16px;
+    margin:0 0 3px;
+  }
+  .tea-shop .shop-note{
+    font-size:13px;
+    color:var(--ink-soft);
+    margin:0 0 12px;
+  }
+  .tea-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+  }
+  .tea-card{
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:12px 14px;
+    background:var(--card);
+  }
+  .tea-card .tea-cn{
+    display:flex;
+    align-items:center;
+    gap:5px;
+    font-size:19px;
+    font-weight:700;
+    color:var(--ink);
+    font-family:'Segoe UI','Noto Sans KR',system-ui,sans-serif;
+  }
+  .tea-card .tea-pron{
+    font-size:11.5px;
+    color:var(--ink-soft);
+    margin-top:2px;
+    font-family:'Segoe UI','Noto Sans KR',system-ui,sans-serif;
+  }
+  .tea-card .tea-desc{font-size:13px; margin-top:7px;}
+  .tea-card .tea-tag{
+    display:inline-block;
+    margin-top:8px;
+    font-size:11px;
+    letter-spacing:0.02em;
+    padding:3px 9px;
+    border-radius:20px;
+    background:var(--lacquer-soft);
+    color:var(--lacquer);
+  }
+  .custom-section{margin-top:26px;}
+  .custom-section h4{font-size:16px; margin:0 0 10px;}
+  .custom-row{display:flex; flex-wrap:wrap; gap:8px;}
+  .custom-chip{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:8px 12px;
+    border:1px solid var(--line);
+    border-radius:10px;
+    background:var(--card);
+  }
+  .custom-chip .cc-cn{
+    font-size:17px;
+    font-weight:700;
+    color:var(--ink);
+    font-family:'Segoe UI','Noto Sans KR',system-ui,sans-serif;
+  }
+  .custom-chip .cc-ko{font-size:11.5px; color:var(--ink-soft);}
+  .tea-tip{
+    display:flex;
+    gap:8px;
+    align-items:flex-start;
+    margin-top:18px;
+    padding:10px 12px;
+    border-radius:8px;
+    background:var(--jade-soft);
+    color:var(--jade);
+    font-size:13px;
+  }
+  .tea-tip svg{width:15px;height:15px;flex:none;margin-top:2px;}
+  @media (max-width:520px){
+    .tea-grid{grid-template-columns:1fr;}
+  }
+
   footer.note{
     max-width:760px;
     margin:40px auto 0;
@@ -596,7 +685,9 @@
     .weather{padding:12px 14px;}
   }
   @media (max-width:360px){
-    .tabs-row{gap:5px;}
+    .tabs-row{gap:4px;}
+    .tab{padding:8px 2px 9px;}
+    .tab .day-num{font-size:14px;}
     .stay-legend{font-size:12px; gap:10px;}
   }
 </style>
@@ -799,6 +890,85 @@ function prepHtml(prep){
     </div>`;
 }
 
+const TEA_SHOPS = [
+  {
+    name:'喜茶 (헤이티)',
+    note:'중국 1위 프리미엄 밀크티 체인. 과일+치즈폼 조합인 "치즈티(芝士茶)"를 처음 만든 곳이에요.',
+    items:[
+      {cn:'多肉葡萄', pron:'둬러우 푸타오', desc:'손으로 깐 거봉 포도알 + 치즈폼 + 녹차. 새콤달콤, 인기 1위 시그니처.', tag:'베스트셀러'},
+      {cn:'芝芝莓莓', pron:'즈즈 메이메이', desc:'생딸기 과육 + 치즈폼 + 녹차. 새콤달콤한 "치즈티" 원조 메뉴.', tag:'새콤달콤'},
+      {cn:'烤黑糖波波牛乳', pron:'카오 헤이탕 보보 니우루', desc:'흑당 버블 + 우유. 차 맛이 없어 누구나 무난하게 즐길 수 있어요.', tag:'차향 없음 · 무난'},
+      {cn:'多肉芒芒甘露', pron:'둬러우 망망 간루', desc:'망고과육 + 코코넛 + 사고. 여름 한정 인기 디저트 음료.', tag:'망고코코넛'},
+    ]
+  },
+  {
+    name:'阿嬤手作 (아마수작)',
+    note:'광시성에서 시작된 "수제(手作)" 밀크티 브랜드. 매장에서 직접 토핑을 만드는 게 특징이에요.',
+    items:[
+      {cn:'打·米麻薯', pron:'다 미마슈', desc:'매장에서 직접 치는 쫄깃한 쌀떡(모찌) + 밀크티. 이 집 대표 시그니처.', tag:'베스트셀러 · 쫄깃'},
+      {cn:'龙眼桂花冰', pron:'룽옌 꾸이화 삥', desc:'즉석에서 깐 생용안 과육 + 계화(금목서) 젤리 빙수. 상큼하고 시원해요.', tag:'상큼 · 빙수스타일'},
+      {cn:'老椰清补凉', pron:'라오예 칭부량', desc:'코코넛밀크 베이스 화채. 덜 달고 담백해서 부담 없어요.', tag:'담백 · 안달아요'},
+    ]
+  },
+];
+
+const CUSTOM_SWEET = [
+  {cn:'正常糖', ko:'기본 당도'},
+  {cn:'少糖', ko:'덜 달게(70%)'},
+  {cn:'半糖', ko:'반만 달게(50%)'},
+  {cn:'微糖', ko:'아주 조금(30%)'},
+  {cn:'无糖', ko:'무설탕'},
+];
+const CUSTOM_ICE = [
+  {cn:'正常冰', ko:'기본 얼음'},
+  {cn:'少冰', ko:'얼음 적게'},
+  {cn:'去冰', ko:'얼음 빼고(시원하게)'},
+  {cn:'热', ko:'따뜻하게(핫)'},
+];
+
+function teaCardHtml(item){
+  return `
+    <div class="tea-card">
+      <div class="tea-cn">${item.cn}<button type="button" class="copy-btn" data-copy="${escapeHtml(item.cn)}" aria-label="중국어 이름 복사" title="중국어 복사">${iconCopy}</button></div>
+      <div class="tea-pron">${item.pron}</div>
+      <p class="tea-desc">${item.desc}</p>
+      <span class="tea-tag">${item.tag}</span>
+    </div>`;
+}
+
+function customChipHtml(c){
+  return `
+    <span class="custom-chip">
+      <span class="cc-cn">${c.cn}</span>
+      <span class="cc-ko">${c.ko}</span>
+      <button type="button" class="copy-btn" data-copy="${escapeHtml(c.cn)}" aria-label="중국어 문구 복사" title="중국어 복사">${iconCopy}</button>
+    </span>`;
+}
+
+function milkTeaPanelHtml(){
+  const shopsHtml = TEA_SHOPS.map(shop => `
+    <div class="tea-shop">
+      <h4>${shop.name}</h4>
+      <p class="shop-note">${shop.note}</p>
+      <div class="tea-grid">${shop.items.map(teaCardHtml).join('')}</div>
+    </div>`).join('');
+  return `
+    <section class="day-panel" id="panel-tea" role="tabpanel" aria-labelledby="tab-tea" hidden>
+      <div class="day-head">
+        <span class="stay-tag" style="color:var(--lacquer); background:var(--lacquer-soft);">밀크티</span>
+        <h2>1일1밀크티 주문 컷시트</h2>
+        <p>중국어를 몰라도 괜찮아요 — 마음에 드는 카드를 그대로 카운터 직원에게 보여주거나, 복사 아이콘으로 복사해서 번역앱에 붙여넣으세요.</p>
+      </div>
+      ${shopsHtml}
+      <div class="custom-section">
+        <h4>당도·얼음 커스터마이징</h4>
+        <div class="custom-row">${CUSTOM_SWEET.map(customChipHtml).join('')}</div>
+        <div class="custom-row" style="margin-top:8px;">${CUSTOM_ICE.map(customChipHtml).join('')}</div>
+      </div>
+      <div class="tea-tip">${iconCheck}<span>메뉴 이름 카드 + 당도/얼음 문구 두 개를 같이 가리키면 주문 끝! 예: "多肉葡萄" + "少糖" + "少冰"</span></div>
+    </section>`;
+}
+
 function dayPanelHtml(d, active){
   const noteHtml = d.note ? `<div class="day-note">${iconWarn}<span>${d.note}</span></div>` : '';
   const prepHtmlStr = prepHtml(d.prep);
@@ -859,12 +1029,16 @@ tabsRow.innerHTML = days.map((d,i) => `
     <span class="day-num">DAY ${d.num}</span>
     <span class="day-date">${d.date}</span>
   </button>`).join('') + `
+  <button class="tab tab-tea" id="tab-tea" role="tab" aria-selected="false" aria-controls="panel-tea" data-target="panel-tea">
+    <span class="day-num">밀크티</span>
+    <span class="day-date">주문 컷시트</span>
+  </button>` + `
   <button class="tab tab-settle" id="tab-settle" role="tab" aria-selected="false" aria-controls="panel-settle" data-target="panel-settle">
     <span class="day-num">정산</span>
     <span class="day-date">지출 기록</span>
   </button>`;
 
-panels.innerHTML = days.map((d,i) => dayPanelHtml(d, i===0)).join('') + settlePanelHtml();
+panels.innerHTML = days.map((d,i) => dayPanelHtml(d, i===0)).join('') + milkTeaPanelHtml() + settlePanelHtml();
 
 tabsRow.addEventListener('click', (e) => {
   const btn = e.target.closest('.tab');
